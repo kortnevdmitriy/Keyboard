@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputConnection;
 
 import com.ronnicknachok.customkeyboard.R;
 
@@ -38,6 +39,7 @@ public class CandidateView extends View {
     private Paint mPaint;
     private boolean mScrolled;
     private int mTargetScrollX;
+    private InputConnection inputConnection;
 
     private int mTotalWidth;
 
@@ -298,5 +300,11 @@ public class CandidateView extends View {
     private void removeHighlight() {
         mTouchX = OUT_OF_BOUNDS;
         invalidate();
+    }
+
+    public void setInputConnection(InputConnection ic) {
+
+        inputConnection = ic;
+
     }
 }
