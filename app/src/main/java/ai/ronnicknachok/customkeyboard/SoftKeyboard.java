@@ -33,8 +33,7 @@ import java.util.List;
  * Example of writing an input method for a soft keyboard.  This code is
  * focused on simplicity over completeness, so it should in no way be considered
  * to be a complete soft keyboard implementation.  Its purpose is to provide
- * a basic example for how you would get started writing an input method, to
- * be fleshed out as appropriate.
+ * a basic example for how you would get started writing an input method.
  */
 public class SoftKeyboard extends InputMethodService
         implements KeyboardView.OnKeyboardActionListener, SpellCheckerSession.SpellCheckerSessionListener {
@@ -308,8 +307,7 @@ public class SoftKeyboard extends InputMethodService
             }
 
             List<String> stringList = new ArrayList<String>();
-            for (int i = 0; i < completions.length; i++) {
-                CompletionInfo ci = completions[i];
+            for (CompletionInfo ci : completions) {
                 if (ci != null) stringList.add(ci.getText().toString());
             }
             setSuggestions(stringList, true, true);
@@ -389,35 +387,6 @@ public class SoftKeyboard extends InputMethodService
                 // Let the underlying text editor always handle these.
                 return false;
             default:
-                // For all other keys, if we want to do transformations on
-                // text being entered with a hard keyboard, we need to process
-                // it and do the appropriate action.
-                /*
-                if (PROCESS_HARD_KEYS) {
-                    if (keyCode == KeyEvent.KEYCODE_SPACE
-                            && (event.getMetaState()&KeyEvent.META_ALT_ON) != 0) {
-                        // A silly example: in our input method, Alt+Space
-                        // is a shortcut for 'android' in lower case.
-                        InputConnection ic = getCurrentInputConnection();
-                        if (ic != null) {
-                            // First, tell the editor that it is no longer in the
-                            // shift state, since we are consuming this.
-                            ic.clearMetaKeyStates(KeyEvent.META_ALT_ON);
-                            keyDownUp(KeyEvent.KEYCODE_A);
-                            keyDownUp(KeyEvent.KEYCODE_N);
-                            keyDownUp(KeyEvent.KEYCODE_D);
-                            keyDownUp(KeyEvent.KEYCODE_R);
-                            keyDownUp(KeyEvent.KEYCODE_O);
-                            keyDownUp(KeyEvent.KEYCODE_I);
-                            keyDownUp(KeyEvent.KEYCODE_D);
-                            // And we consume this event.
-                            return true;
-                        }
-                    }
-                    if (mPredictionOn && translateKeyDown(keyCode, event)) {
-                        return true;
-                    }
-                }*/
         }
 
         return super.onKeyDown(keyCode, event);
@@ -760,7 +729,7 @@ public class SoftKeyboard extends InputMethodService
 
     @Override
     public void onGetSentenceSuggestions(SentenceSuggestionsInfo[] results) {
-        Log.d("SoftKeyboard", "onGetSentenceSuggestions");
+        Log.d("CustomKeyboard", "onGetSentenceSuggestions");
         final List<String> sb = new ArrayList<>();
         for (final SentenceSuggestionsInfo ssi : results) {
             for (int j = 0; j < ssi.getSuggestionsCount(); ++j) {

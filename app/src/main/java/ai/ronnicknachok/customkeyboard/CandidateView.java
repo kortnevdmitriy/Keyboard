@@ -226,7 +226,7 @@ public class CandidateView extends View {
         scrollTo(0, 0);
         mTargetScrollX = 0;
         // Compute the total width
-        draw(null);
+        onDraw(null);
         invalidate();
         requestLayout();
     }
@@ -288,7 +288,7 @@ public class CandidateView extends View {
     public void takeSuggestionAt(float x) {
         mTouchX = (int) x;
         // To detect candidate
-        draw(null);
+        onDraw(null);
         if (mSelectedIndex >= 0) {
             mService.pickSuggestionManually(mSelectedIndex);
         }
