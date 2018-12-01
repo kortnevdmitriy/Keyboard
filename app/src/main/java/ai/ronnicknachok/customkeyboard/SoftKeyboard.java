@@ -563,7 +563,7 @@ public class SoftKeyboard extends InputMethodService
             if (mComposing.length() > 0) {
                 ArrayList<String> list = new ArrayList<String>();
                 //list.add(mComposing.toString());
-                Log.d("SoftKeyboard", "REQUESTING: " + mComposing.toString());
+                Log.d("CustomKeyboard", "REQUESTING: " + mComposing.toString());
                 mScs.getSentenceSuggestions(new TextInfo[]{new TextInfo(mComposing.toString())}, 5);
                 setSuggestions(list, true, true);
             } else {
@@ -704,7 +704,7 @@ public class SoftKeyboard extends InputMethodService
     }
 
     public void swipeRight() {
-        Log.d("SoftKeyboard", "Swipe right");
+        Log.d("CustomKeyboard", "Swipe right");
         if (mCompletionOn || mPredictionOn) {
             pickDefaultCandidate();
         }
@@ -732,25 +732,21 @@ public class SoftKeyboard extends InputMethodService
 
     /**
      * http://www.tutorialspoint.com/android/android_spelling_checker.htm
-     *
      * @param results results
      */
     @Override
     public void onGetSuggestions(SuggestionsInfo[] results) {
         final StringBuilder sb = new StringBuilder();
-
         for (SuggestionsInfo result : results) {
             // Returned suggestions are contained in SuggestionsInfo
             final int len = result.getSuggestionsCount();
             sb.append('\n');
-
             for (int j = 0; j < len; ++j) {
                 sb.append(",").append(result.getSuggestionAt(j));
             }
-
             sb.append(" (").append(len).append(")");
         }
-        Log.d("SoftKeyboard", "SUGGESTIONS: " + sb.toString());
+        Log.d("CustomKeyboard", "SUGGESTIONS: " + sb.toString());
     }
 
     private void dumpSuggestionsInfoInternal(
@@ -766,14 +762,13 @@ public class SoftKeyboard extends InputMethodService
     public void onGetSentenceSuggestions(SentenceSuggestionsInfo[] results) {
         Log.d("SoftKeyboard", "onGetSentenceSuggestions");
         final List<String> sb = new ArrayList<>();
-        for (int i = 0; i < results.length; ++i) {
-            final SentenceSuggestionsInfo ssi = results[i];
+        for (final SentenceSuggestionsInfo ssi : results) {
             for (int j = 0; j < ssi.getSuggestionsCount(); ++j) {
                 dumpSuggestionsInfoInternal(
                         sb, ssi.getSuggestionsInfoAt(j), ssi.getOffsetAt(j), ssi.getLengthAt(j));
             }
         }
-        Log.d("SoftKeyboard", "SUGGESTIONS: " + sb.toString());
+        Log.d("CustomKeyboard", "SUGGESTIONS: " + sb.toString());
         setSuggestions(sb, true, true);
     }
 }
